@@ -1,0 +1,6 @@
+body,
+html,
+#__next {
+  height: 100%;
+  font-family: Arial;
+}
