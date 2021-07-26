@@ -1,13 +1,11 @@
 let isDev = process.env.NODE_ENV === "development";
 
-let show = "landing";
-if (isDev) {
-  show = "setup";
-}
-
-module.exports.show = show;
+module.exports.isDev = isDev;
 
 // your name of the metaverse.
 module.exports.name = "Wong Lok";
 
 //
+module.exports.firebaseConfig = {
+  //
+};

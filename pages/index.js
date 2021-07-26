@@ -1,23 +1,13 @@
-// import Head from "next/head";
+export default function HomePage() {
+  let ShowPage = <div></div>;
 
-export default function Home({ settings }) {
-  return (
-    <>
-      {settings.show === "" && (
-        <div className="w-full h-full bg-red-300">Landing</div>
-      )}
-    </>
-  );
-}
+  if (process.env.NODE_ENV === "development") {
+    // Shake it off in Production.
+    ShowPage = require("../vfx/pages/Setup").Setup;
+  } else {
+    //
+    ShowPage = require("../vfx/pages/Landing").Landing;
+  }
 
-//
-
-export async function getStaticProps() {
-  let settings = require("../versa.config");
-
-  return {
-    props: {
-      settings,
-    },
-  }; //
+  return <ShowPage></ShowPage>;
 }
