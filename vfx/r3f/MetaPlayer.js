@@ -36,6 +36,7 @@ export function MetaPlayer({ collider, startAt }) {
     };
 
     player.position.copy(startAt);
+    player.position.y += 5;
 
     // player.castShadow = true;
     // player.receiveShadow = true;

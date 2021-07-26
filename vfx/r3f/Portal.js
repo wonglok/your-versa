@@ -1,7 +1,7 @@
 import { Text } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import { Sphere } from "three";
+import { MathUtils, Sphere } from "three";
 import { Color, Vector3 } from "three";
 import { enableBloom } from "./Bloomer";
 import { Now } from "../state/Now";
@@ -40,9 +40,9 @@ export function Portal({
       enableBloom(ring2.current);
       enableBloom(ring3.current);
 
-      ring1.current.material.color = new Color("#444444");
-      ring2.current.material.color = new Color("#444444");
-      ring3.current.material.color = new Color("#444444");
+      ring1.current.material.color = new Color("#121212");
+      ring2.current.material.color = new Color("#121212");
+      ring3.current.material.color = new Color("#121212");
     }
   }, [bloom]);
 
@@ -141,16 +141,8 @@ function CountDownText({
       if (label !== text.loading) {
         setLabel(text.loading);
 
-        if (ref.current) {
-          ref.current.position.y = 5 * 0.8 * 1.5 - 8;
-          ref.current.position.z = -10;
-        }
         // getVoicesAPI().charge.play();
       } else {
-        if (ref.current) {
-          ref.current.position.y = 5 * 0.8 * 1.5;
-          ref.current.position.z = 0;
-        }
       }
 
       if (!charge.current) {
@@ -168,7 +160,29 @@ function CountDownText({
           // getVoicesAPI().teleport.play();
         }
       }
+
+      if (ref.current) {
+        ref.current.position.y = MathUtils.lerp(
+          ref.current.position.y,
+          5 * 0.8 * 1.5 - 8,
+          0.1
+        );
+        ref.current.position.z = MathUtils.lerp(
+          ref.current.position.z,
+          -10,
+          0.1
+        );
+      }
     } else {
+      if (ref.current) {
+        ref.current.position.y = MathUtils.lerp(
+          ref.current.position.y,
+          5 * 0.8 * 1.5 - 0,
+          0.1
+        );
+        ref.current.position.z = MathUtils.lerp(ref.current.position.z, 0, 0.1);
+      }
+
       ticker.current = 0;
       did.current = false;
       charge.current = false;

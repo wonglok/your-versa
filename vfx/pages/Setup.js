@@ -29,6 +29,11 @@ export function Setup() {
 5. Deploy this to vercel / netlify.
             `.trim()}
             </pre>
+            <div className="p-4">
+              <a href="/welcome" className="underline text-blue-500 text-right">
+                Visit Original Welcome Page.
+              </a>
+            </div>
           </div>
         </div>
       </div>

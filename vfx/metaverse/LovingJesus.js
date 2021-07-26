@@ -6,6 +6,7 @@ import { CameraRigFirstPerson } from "../r3f/CameraRigFirstPerson";
 import { Portal } from "../r3f/Portal";
 import { Bloomer } from "../r3f/Bloomer";
 import { loginGuest, onReady } from "../utils/get-fire";
+import { Now } from "../state/Now";
 export function LovingJesus() {
   return (
     <group>
@@ -17,6 +18,12 @@ export function LovingJesus() {
 }
 
 function Content() {
+  let startAt = {
+    x: 0.6696873495643494,
+    y: 10 + 4.393610750044425,
+    z: 225.62193080491028,
+  };
+
   let floor = useGLTF(`/vfx/metaverse/loving-jesus.glb`);
 
   useEffect(() => {
@@ -25,7 +32,7 @@ function Content() {
     root.traverse((it) => {
       if (it.material) {
         // it.material = it.material.clone();
-        it.material.roughness = 0.2;
+        it.material.roughness = 0.0;
         it.material.metalness = 0.9;
         it.userData.hoverable = true;
 
@@ -38,12 +45,6 @@ function Content() {
       }
     });
   }, [floor]);
-
-  let startAt = {
-    x: 0.6696873495643494,
-    y: 4.393610750044425,
-    z: 225.62193080491028,
-  };
 
   //
   return (
@@ -124,17 +125,17 @@ function Content() {
 
       {/* lighting... */}
       <directionalLight
-        intensity={0.5}
-        position={[10, 10, 0]}
+        intensity={1}
+        position={[10, 10, -10]}
       ></directionalLight>
 
       {/* lighting... */}
       <directionalLight
-        intensity={0.5}
+        intensity={1}
         position={[-10, 10, 0]}
       ></directionalLight>
 
-      {/* <ambientLight intensity={0.3}></ambientLight> */}
+      <ambientLight intensity={0.5}></ambientLight>
 
       <Bloomer></Bloomer>
     </group>
