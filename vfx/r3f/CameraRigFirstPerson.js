@@ -41,7 +41,7 @@ export function CameraRigFirstPerson() {
   useEffect(() => {
     let orig = Now.camMode;
     Now.camMode = Words.firstPerson;
-    Now.avatarSpeed = 5;
+    Now.avatarSpeed = 3.5;
     return () => {
       Now.avatarSpeed = 1;
       Now.camMode = orig;

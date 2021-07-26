@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Sphere } from "three";
 import { Color, Vector3 } from "three";
 import { enableBloom } from "./Bloomer";
-import { Now } from "./Now";
+import { Now } from "../state/Now";
 
 export function Portal({
   bloom = false,
@@ -20,7 +20,7 @@ export function Portal({
     z: -80,
   },
 }) {
-  let { gl } = useThree();
+  let { get } = useThree();
 
   // Login Zone
   // {x: 98.95287541944776, y: 4.206666727900821e-15, z: 0.668955153139894}
@@ -29,6 +29,10 @@ export function Portal({
   const ring2 = useRef();
   const ring3 = useRef();
   let pt = new Vector3().copy(zone);
+
+  useEffect(() => {
+    pt.copy(zone);
+  }, [zone]);
 
   useEffect(() => {
     if (bloom) {
@@ -40,7 +44,7 @@ export function Portal({
       ring2.current.material.color = new Color("#444444");
       ring3.current.material.color = new Color("#444444");
     }
-  }, []);
+  }, [bloom]);
 
   useFrame((st, dt) => {
     if (ring1.current) {
@@ -113,6 +117,7 @@ function CountDownText({
     console.log("action");
   },
 }) {
+  let ref = useRef();
   let [label, setLabel] = useState(text.ready);
   let ticker = useRef(0);
   let total = 60 * 3;
@@ -135,7 +140,17 @@ function CountDownText({
 
       if (label !== text.loading) {
         setLabel(text.loading);
+
+        if (ref.current) {
+          ref.current.position.y = 5 * 0.8 * 1.5 - 8;
+          ref.current.position.z = -10;
+        }
         // getVoicesAPI().charge.play();
+      } else {
+        if (ref.current) {
+          ref.current.position.y = 5 * 0.8 * 1.5;
+          ref.current.position.z = 0;
+        }
       }
 
       if (!charge.current) {
@@ -149,6 +164,7 @@ function CountDownText({
           if (typeof action === "function") {
             action({ setLabel });
           }
+
           // getVoicesAPI().teleport.play();
         }
       }
@@ -173,6 +189,7 @@ function CountDownText({
 
   return (
     <Text
+      ref={ref}
       position-y={5 * 0.8 * 1.5}
       scale={80 * 2 * 0.2 * 0.5}
       font={`/font/Cronos-Pro-Light_12448.ttf`}

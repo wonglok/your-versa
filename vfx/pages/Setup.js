@@ -16,11 +16,11 @@ export function Setup() {
 
       <div className={"absolute top-0 right-0 w-full h-full"}>
         <div className="h-full w-full flex flex-col items-center justify-center ">
-          <div className=" bg-white rounded-3xl shadow-lg border border-green-600">
+          <div className=" bg-white rounded-3xl shadow-lg border border-green-600  mx-8">
             <h1 className="text-3xl mb-3 p-4 text-center text-white bg-green-600 rounded-t-3xl border-b">
               Setup Guide
             </h1>
-            <pre className="p-4 font-sans leading-8 text-lg">
+            <pre className="p-4 font-sans whitespace-pre-wrap leading-8 text-lg">
               {`
 1. Copy and Paste your firebase config to "versa.config.js"
 2. Copy and Paste Security Rules to firebase realtime database.

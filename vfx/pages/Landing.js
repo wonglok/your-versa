@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { getGPUTier } from "detect-gpu";
 import { useState } from "react";
+import { sRGBEncoding } from "three";
 import { LovingJesus } from "../metaverse/LovingJesus";
 
 export function Landing() {
@@ -21,6 +22,7 @@ function CanvasArea() {
       // }
 
       onCreated={({ gl }) => {
+        gl.outputEncoding = sRGBEncoding;
         //
         getGPUTier({ glContext: gl.getContext() }).then((v) => {
           // ipad
