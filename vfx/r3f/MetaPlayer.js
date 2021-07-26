@@ -14,6 +14,11 @@ import { Now } from "../state/Now";
 export function MetaPlayer({ collider, startAt }) {
   //
 
+  useEffect(() => {
+    Now.avatarAt.copy(startAt);
+    Now.goingTo.copy(startAt);
+  });
+
   let playerRef = useRef();
   useEffect(() => {
     let RoundedBoxGeometry =

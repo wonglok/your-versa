@@ -1,21 +1,31 @@
 import { useEffect } from "react";
 
-export const useAutoEvent = function (ev, fnc, settings = { passive: false }) {
+export const useAutoEvent = function (
+  ev,
+  fnc,
+  settings = { passive: false },
+  dom
+) {
   useEffect(() => {
-    window.addEventListener(ev, fnc, settings);
+    dom = dom || window;
+    dom.addEventListener(ev, fnc, settings);
     return () => {
-      window.removeEventListener(ev, fnc);
+      dom = dom || window;
+      dom.removeEventListener(ev, fnc);
     };
   }, []);
 };
 
 export const applyAutoEvent = function (
+  dom,
   ev,
   fnc,
   settings = { passive: false }
 ) {
-  window.addEventListener(ev, fnc, settings);
+  dom = dom || window;
+  dom.addEventListener(ev, fnc, settings);
   return () => {
-    window.removeEventListener(ev, fnc);
+    dom = dom || window;
+    dom.removeEventListener(ev, fnc);
   };
 };

@@ -179,12 +179,12 @@ export function MetaMap({
 
       let cleans = [];
 
-      cleans.push(applyAutoEvent("pointerdown", h.goDown));
-      cleans.push(applyAutoEvent("pointerup", h.click));
-      cleans.push(applyAutoEvent("pointerup", h.goUp));
-      cleans.push(applyAutoEvent("pointermove", h.goMove));
-      cleans.push(applyAutoEvent("click", h.clicker));
-      cleans.push(applyAutoEvent("pointerdown", h.goDown));
+      cleans.push(applyAutoEvent(get().gl.domElement, "pointerdown", h.goDown));
+      cleans.push(applyAutoEvent(get().gl.domElement, "pointerup", h.click));
+      cleans.push(applyAutoEvent(get().gl.domElement, "pointerup", h.goUp));
+      cleans.push(applyAutoEvent(get().gl.domElement, "pointermove", h.goMove));
+      cleans.push(applyAutoEvent(get().gl.domElement, "click", h.clicker));
+      cleans.push(applyAutoEvent(get().gl.domElement, "pointerdown", h.goDown));
 
       return () => {
         cleans.forEach((e) => e());

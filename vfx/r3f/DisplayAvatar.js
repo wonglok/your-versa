@@ -1,5 +1,9 @@
 import { useFBX } from "@react-three/drei";
-import { useMemo, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { useEffect, useMemo, useRef } from "react";
+import { AnimationMixer, DoubleSide } from "three";
+import { SkeletonUtils } from "three/examples/jsm/utils/SkeletonUtils";
+import { Now, Words } from "../state/Now";
 
 // export let setChibiURL = async ({ chibi, refURL }) => {
 //   if (refURL !== null) {
@@ -31,11 +35,11 @@ import { useMemo, useRef } from "react";
 //   }
 // };
 
-export function MainAvatarLogic({ profile, url }) {
+export function DisplayAvatar({ profile }) {
   let ref = useRef();
 
   let raw = useFBX(profile.avatarURL);
-  let avatar = useMemo(() => {
+  let model = useMemo(() => {
     let other = SkeletonUtils.clone(raw);
 
     // if useFBX
@@ -50,9 +54,25 @@ export function MainAvatarLogic({ profile, url }) {
       }
     });
 
+    other.scale.set(0.0075, 0.0075, 0.0075);
+    other.traverse((item) => {
+      if (item) {
+        if (item.material) {
+          item.castShadow = true;
+          item.material.side = DoubleSide;
+        }
+      }
+    });
+
     return other;
   }, [raw]);
 
+  useEffect(() => {
+    ref.current.add(model);
+    return () => {
+      ref.current.remove(model);
+    };
+  });
   //
 
   useEffect(() => {
@@ -62,25 +82,12 @@ export function MainAvatarLogic({ profile, url }) {
     }
   }, [profile.avatarTextureRefURL]);
 
-  let model = useMemo(() => {
-    let cloned = SkeletonUtils.clone(avatar.scene);
-
-    cloned.scale.set(0.0075, 0.0075, 0.0075);
-    cloned.traverse((item) => {
-      if (item) {
-        if (item.material) {
-          item.castShadow = true;
-          item.material.side = DoubleSide;
-        }
-      }
-    });
-    return cloned;
-  }, []);
-
   let running = useFBX(
-    `/chibi/actions-for-this/contorls/running-in-place-relax.fbx`
+    `/vfx/chibi/actions/contorls/running-in-place-relax.fbx`
   );
-  let standing = useFBX(`/chibi/actions-for-this/contorls/idle-breathing.fbx`);
+
+  //
+  let standing = useFBX(`/vfx/chibi/actions/contorls/idle-breathing.fbx`);
   let mixer = useMemo(() => new AnimationMixer(), []);
 
   useEffect(() => {
@@ -119,7 +126,7 @@ export function MainAvatarLogic({ profile, url }) {
     };
 
     runAction();
-    let clean = Now.onEventChangeKey("avatarMode", runAction);
+    let clean = Now.onEvent("avatarMode", runAction);
     return () => {
       clean();
     };
@@ -129,12 +136,11 @@ export function MainAvatarLogic({ profile, url }) {
     mixer.update(dt);
   });
 
-  //
-  //console.log(avatar);
-  //
-
   useFrame(() => {
     if (ref.current) {
+      ref.current.visible = Now.camMode === Words.birdView;
+
+      //
       Now.avatarAt.y += -2.0 - 0.25;
       ref.current.position.copy(Now.avatarAt);
     }
@@ -147,9 +153,7 @@ export function MainAvatarLogic({ profile, url }) {
 
   return (
     <group ref={ref}>
-      <group>
-        <primitive castShadow={true} name="avatar" object={model}></primitive>
-      </group>
+      {/* <primitive castShadow={true} name="avatar" object={model}></primitive> */}
     </group>
   );
 }
