@@ -7,6 +7,7 @@ import { Portal } from "../r3f/Portal";
 import { Bloomer } from "../r3f/Bloomer";
 import { loginGuest, onReady } from "../utils/get-fire";
 import { Now } from "../state/Now";
+import { Color } from "three";
 export function LovingJesus() {
   return (
     <group>
@@ -32,8 +33,9 @@ function Content() {
     root.traverse((it) => {
       if (it.material) {
         // it.material = it.material.clone();
-        it.material.roughness = 0.0;
+        it.material.roughness = 0.05;
         it.material.metalness = 0.9;
+        it.material.emissive = new Color("#020202");
         it.userData.hoverable = true;
 
         if (it.material.name === "trunk") {

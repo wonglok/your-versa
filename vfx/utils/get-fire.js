@@ -70,6 +70,11 @@ export const loginGoogle = () => {
   return firebase.auth().signInWithPopup(provider);
 };
 
+export const logout = () => {
+  setupOnce();
+  return firebase.auth().logout();
+};
+
 //
 
 export const onReady = () => {
@@ -79,13 +84,8 @@ export const onReady = () => {
       if (FireCache.has("user")) {
         clearInterval(tt);
         resolve({
-          firebase,
           user: FireCache.get("user"),
-          fire: FireCache.get("app"),
           db: FireCache.get("database"),
-          logout: () => {
-            return FireCache.get("app").auth().signOut();
-          },
         });
       }
     });
