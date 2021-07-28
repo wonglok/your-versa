@@ -1,5 +1,10 @@
 import Link from "next/link";
+import router from "next/router";
+import { useEffect } from "react";
 export default function PageAbout() {
+  useEffect(() => {
+    router.prefetch(`/game`);
+  }, []);
   return (
     <div>
       <div className="p-4 lg:p-12">
