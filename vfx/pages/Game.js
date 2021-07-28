@@ -4,7 +4,7 @@ import { useState } from "react";
 import { sRGBEncoding } from "three";
 import { TheVine } from "../main/TheVine";
 
-export function Landing() {
+export function Game() {
   return (
     <div className="w-full h-full">
       <CanvasArea></CanvasArea>

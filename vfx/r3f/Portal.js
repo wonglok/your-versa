@@ -13,6 +13,7 @@ export function Portal({
     ready: "Login",
     loading: "Opening Login...",
   },
+  preload = () => {},
   action = () => {},
   zone = {
     x: 0,
@@ -72,6 +73,7 @@ export function Portal({
     <group position-y={5.5}>
       <group position-x={zone.x} position-y={zone.y} position-z={zone.z}>
         <CountDownText
+          preload={preload}
           ring={ring3}
           pt={pt}
           text={text}
@@ -113,6 +115,9 @@ function CountDownText({
     ready: "Login",
     loading: "Opening Login...",
   },
+  preload = () => {
+    console.log("preload");
+  },
   action = () => {
     console.log("action");
   },
@@ -135,6 +140,10 @@ function CountDownText({
     sphere.center.copy(pt);
     if (sphere.containsPoint(Now.avatarAt)) {
       ticker.current = ticker.current || 0;
+
+      if (ticker.current === 1) {
+        preload();
+      }
 
       ticker.current += 1;
 

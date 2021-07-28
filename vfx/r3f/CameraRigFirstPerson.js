@@ -181,30 +181,31 @@ export function CameraRigFirstPerson() {
         keyBoardForward.applyEuler(camera.rotation);
         keyBoardForward.y = 0.0;
 
-        Now.goingTo.add(keyBoardForward);
+        Now.avatarAt.add(keyBoardForward);
       } else if (Now.keyA) {
         keyBoardForward.set(-1, 0, 0);
         keyBoardForward.applyEuler(camera.rotation);
         keyBoardForward.y = 0.0;
 
-        Now.goingTo.add(keyBoardForward);
+        Now.avatarAt.add(keyBoardForward);
       } else if (Now.keyS) {
         keyBoardForward.set(0, 0, 1);
         keyBoardForward.applyEuler(camera.rotation);
         keyBoardForward.y = 0.0;
 
-        Now.goingTo.add(keyBoardForward);
+        Now.avatarAt.add(keyBoardForward);
       } else if (Now.keyD) {
         keyBoardForward.set(1, 0, 0);
         keyBoardForward.applyEuler(camera.rotation);
         keyBoardForward.y = 0.0;
 
-        Now.goingTo.add(keyBoardForward);
+        Now.avatarAt.add(keyBoardForward);
       }
 
-      if (!(Now.keyW || Now.keyA || Now.keyS || Now.keyD)) {
-        Now.goingTo.copy(Now.avatarAt);
-      }
+      Now.goingTo.copy(Now.avatarAt);
+      // if (!(Now.keyW || Now.keyA || Now.keyS || Now.keyD)) {
+      //   Now.avatarAt.copy(Now.avatarAt);
+      // }
     };
 
     // grid of raycaster

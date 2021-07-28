@@ -1,15 +1,12 @@
 export default function HomePage() {
-  let ShowPage = <div></div>;
+  let LandingPage = require("../vfx/pages/Game").Game;
 
   if (process.env.NODE_ENV === "development") {
     // Shake it off in Production.
-    ShowPage = require("../vfx/pages/Setup").Setup;
-  } else {
-    //
-    ShowPage = require("../vfx/pages/Landing").Landing;
+    LandingPage = require("../vfx/pages/Setup").Setup;
   }
 
-  return <ShowPage></ShowPage>;
+  return <LandingPage></LandingPage>;
 }
 
 //

@@ -1,7 +1,10 @@
-import { Landing } from "../vfx/pages/Landing";
+import { Game } from "../vfx/pages/Game";
 
-export default function Page() {
-  return <Landing></Landing>;
+export default function GamePage() {
+  // todo: setup checker
+
+  // firebase App url !== effectnode
+  return <Game></Game>;
 }
 
 //
