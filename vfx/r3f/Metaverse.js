@@ -4,21 +4,24 @@ import { MetaMap } from "../r3f/MetaMap";
 import { CubeMap } from "../r3f/CubeMap";
 import { CameraRigFirstPerson } from "../r3f/CameraRigFirstPerson";
 import { Portal } from "../r3f/Portal";
-import { Bloomer } from "../r3f/Bloomer";
 import { loginGuest, onReady } from "../utils/get-fire";
-import { Now } from "../state/Now";
 import { Color } from "three";
-export function LovingJesus() {
+// import { Now } from "../state/Now";
+// import { MyWindow } from "../r3f/MyWindow";
+// import { useThree } from "@react-three/fiber";
+// import { Bloomer } from "../r3f/Bloomer";
+
+export function RunContent({ children }) {
   return (
     <group>
       <Suspense fallback={null}>
-        <Content></Content>
+        <Content>{children}</Content>
       </Suspense>
     </group>
   );
 }
 
-function Content() {
+function Content({ children }) {
   let startAt = {
     x: 0.6696873495643494,
     y: 10 + 4.393610750044425,
@@ -51,6 +54,8 @@ function Content() {
   //
   return (
     <group>
+      {typeof children === "function" ? children({ startAt }) : children}
+
       <Portal
         bloom={true}
         text={{
@@ -139,7 +144,7 @@ function Content() {
 
       <ambientLight intensity={0.5}></ambientLight>
 
-      <Bloomer></Bloomer>
+      {/* <Bloomer></Bloomer> */}
     </group>
   );
 }

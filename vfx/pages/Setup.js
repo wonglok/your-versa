@@ -20,18 +20,12 @@ export function Setup() {
             <h1 className="text-3xl mb-3 p-4 text-center text-white bg-green-600 rounded-t-3xl border-b">
               Setup Guide
             </h1>
-            <pre className="p-4 font-sans whitespace-pre-wrap leading-8 text-lg">
-              {`
-1. Copy and Paste your firebase config to "versa.config.js"
-2. Copy and Paste Security Rules to firebase realtime database.
-3. Add your domain to firebase login authorisation section.
-4. Enable google login and aynonmous login.
-5. Deploy this to vercel / netlify.
-            `.trim()}
-            </pre>
+            <div className="p-4 font-sans whitespace-pre-wrap leading-8 text-lg text-left">
+              Thank you for using our metaverse 3D world code template.
+            </div>
             <div className="p-4">
-              <a href="/welcome" className="underline text-blue-500 text-right">
-                Visit Original Welcome Page.
+              <a href="/guide" className="underline text-blue-500 text-right">
+                Begin Setup my site
               </a>
             </div>
           </div>
@@ -66,3 +60,14 @@ function Content() {
     </group>
   );
 }
+
+/*
+
+
+1. Copy and Paste your firebase config to "versa.config.js"
+2. Copy and Paste Security Rules to firebase realtime database.
+3. Add your domain to firebase login authorisation section.
+4. Enable google login and aynonmous login.
+5. Deploy this to vercel / netlify.
+
+*/

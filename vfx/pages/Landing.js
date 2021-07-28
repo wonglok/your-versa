@@ -2,7 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { getGPUTier } from "detect-gpu";
 import { useState } from "react";
 import { sRGBEncoding } from "three";
-import { LovingJesus } from "../metaverse/LovingJesus";
+import { TheVine } from "../main/TheVine";
 
 export function Landing() {
   return (
@@ -49,7 +49,7 @@ function CanvasArea() {
       }}
       dpr={dpr}
     >
-      <LovingJesus></LovingJesus>
+      <TheVine></TheVine>
     </Canvas>
   );
 }
