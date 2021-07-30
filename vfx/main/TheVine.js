@@ -129,6 +129,7 @@ function Content({ children }) {
         intensity={1}
         position={[-10, 10, 0]}
       ></directionalLight>
+
       <ambientLight intensity={0.5}></ambientLight>
       <Bloomer></Bloomer>
     </group>

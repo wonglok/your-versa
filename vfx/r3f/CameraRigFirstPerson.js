@@ -8,7 +8,7 @@ import { CircleBufferGeometry } from "three";
 import { Camera, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Now, Words } from "../state/Now";
-import { useAutoEvent } from "../utils/use-auto-event";
+import { applyAutoEvent, useAutoEvent } from "../utils/use-auto-event";
 
 export function CameraRigFirstPerson() {
   let { get, gl } = useThree();
@@ -141,34 +141,53 @@ export function CameraRigFirstPerson() {
     let up = new Vector3(0, 1, 0);
 
     let ttt = 0;
+    let isUsing = false;
     manager.on("start move dir plain", function (evt, nipple) {
       if (nipple?.angle?.radian) {
-        orbit.enabled = false;
+        orbit.enableRotate = false;
         forward.set(0, 0, -1);
         forward.applyAxisAngle(
           up,
           orbit.getAzimuthalAngle() + nipple?.angle?.radian - Math.PI * 0.5 ||
             0.0
         );
+        isUsing = true;
         Now.isDown = true;
 
         clearTimeout(ttt);
         ttt = setTimeout(() => {
-          orbit.enabled = true;
+          isUsing = false;
         }, 100);
       }
     });
 
-    manager.on("end hidden removed", () => {
+    manager.on("end", () => {
       forward.multiplyScalar(0);
       Now.isDown = false;
-      orbit.enabled = true;
-
-      clearTimeout(ttt);
-      ttt = setTimeout(() => {
-        orbit.update();
-      }, 100);
+      orbit.enableRotate = true;
+      isUsing = false;
     });
+
+    let cte = applyAutoEvent(
+      gl.domElement.parentElement,
+      `touchend`,
+      (ev) => {
+        if (!isUsing) {
+          orbit.enableRotate = true;
+        }
+      },
+      { passive: false }
+    );
+    let cts = applyAutoEvent(
+      gl.domElement.parentElement,
+      `touchstart`,
+      (ev) => {
+        if (!isUsing) {
+          orbit.enableRotate = true;
+        }
+      },
+      { passive: false }
+    );
 
     let keyBoardForward = new Vector3(0, 0, 1);
     works.current.ctrl2 = () => {
@@ -213,12 +232,10 @@ export function CameraRigFirstPerson() {
     works.current.ctrl3 = () => {
       let newType = "floor";
 
-      let upness = Now.cursorNormal.y || 0;
+      // let upness = Now.cursorNormal.y || 0;
       if (Now.cursorType !== newType) {
         Now.cursorType = newType;
       }
-
-      // hover();
     };
 
     works.current.ctrl = () => {
@@ -242,6 +259,8 @@ export function CameraRigFirstPerson() {
 
       joystick.remove();
       note.remove();
+      cte();
+      cts();
     };
   }, []);
 
